@@ -23,9 +23,10 @@ def get_latest_player_stats_file():
         #     e.g. 2021-09-01.csv
         filename = file.strip("'")
         filename = filename.split("_")[-1]
-        date = filename.split(".")[0]
-        print("ODY Append date {} for file {} filename {}".format(date, file, filename))
-        dates.append(date)
+
+        if (filename.split(".")[1] == "csv"):
+            date = filename.split(".")[0]
+            dates.append(date)
 
     # Sort the list in ascending order of dates
     dates.sort(key = lambda date: datetime.strptime(date, '%Y-%m-%d'))
