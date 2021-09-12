@@ -1,9 +1,10 @@
 
 # A very simple Flask Hello World app for you to get started with...
 
+import os
 from flask import Flask, render_template, request, redirect, url_for
 
-UPLOAD_FOLDER = '/uploads'
+UPLOAD_FOLDER = '/home/odygrd/guildstats/uploads'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -16,5 +17,5 @@ def index():
 def upload_file():
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
-        uploaded_file.save(uploaded_file.filename)
+        uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename))
     return redirect(url_for('index'))
