@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table id="data" class="table table-striped">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Era</th>
+    <th>Attack</th>
+    <th>Defense</th>
+    <th>Attack+Defence</th>
+    <th>Era Avg Att/Def</th>
+    <th>Goods</th>
+    <th>Era Avg Goods</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for player in players %}
+  <tr>
+    <td>{{ player.name }}</td>
+    <td>{{ player.era }}</td>
+    <td>{{ player.attack }}</td>
+    <td>{{ player.defence }}</td>
+    <td>{{ player.attdef }}</td>
+    <td>{{ player.era_avg_attdef }}</td>
+    <td>{{ player.goods }}</td>
+    <td>{{ player.era_avg_goods }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    $('#data').DataTable({
+      columns: [
+        null,
+        {searchable: false},
+        {orderable: false, searchable: false},
+        {orderable: false, searchable: false},
+        null],
+    });
+  });
+</script>
+{% endblock %}
