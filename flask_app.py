@@ -24,6 +24,7 @@ def get_latest_player_stats_file():
         filename = file.strip("'")
         filename = filename.split("_")[-1]
         date = filename.split(".")[0]
+        print("ODY Append date", date)
         dates.append(date)
 
     # Sort the list in ascending order of dates
