@@ -17,9 +17,9 @@ def upload_file():
 def index():
     return render_template("index.html")
 
-# @app.route('/upload', methods=['POST'])
-# def upload_file():
-#     uploaded_file = request.files['file']
-#     if uploaded_file.filename != '':
-#         uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename))
-#     return redirect(url_for('index'))
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload_file():
+    uploaded_file = request.files['file']
+    if uploaded_file.filename != '':
+        uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename))
+    return 'file uploaded successfully'
