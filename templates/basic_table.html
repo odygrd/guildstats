@@ -17,6 +17,7 @@
   <tbody>
   {% for player in players %}
   <tr>
+    <td>{{ player.rank }}</td>
     <td>{{ player.name }}</td>
     <td>{{ player.era }}</td>
     <td>{{ player.attack }}</td>
@@ -36,6 +37,7 @@
   $(document).ready(function () {
     $('#data').DataTable({
       columns: [
+        {orderable: true, searchable: false},
         {orderable: true, searchable: true},
         {orderable: true, searchable: true},
         {orderable: true, searchable: false},

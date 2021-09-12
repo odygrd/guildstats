@@ -17,7 +17,8 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 class PlayerInfo:
-  def __init__(self, name, era, attack, defence, attdef, era_avg_attdef, goods, era_avg_goods):
+  def __init__(self, rank, name, era, attack, defence, attdef, era_avg_attdef, goods, era_avg_goods):
+    self.rank = rank
     self.name = name
     self.era = era
     self.attack = attack
@@ -64,20 +65,21 @@ def gen_player_stats_html():
     # Join into a single df
     df_final = df.join(df_mean)
     df_final.reset_index(drop=False, inplace=True)
+    column_names = ["Score", "Name", "Era", "Attack", "Defense", "Total (Att+Def)", "Era average Att+Def", "Guild Goods", "Era average Guild Goods"]
+    df_final = df_final.reindex(columns=column_names)
+    df_final.set_index('Score', inplace=True)
+    df_final.sort_index(ascending=False,inplace=True)
+    df_final.reset_index(drop=True, inplace=True)
 
     players = []
+    rank = 1
     for index, row in df_final.iterrows():
-        players.append(PlayerInfo(name=row["Name"], era=row["Era"],
+        players.append(PlayerInfo(rank=rank, name=row["Name"], era=row["Era"],
                                   attack=row["Attack"], defence = row["Defense"], attdef= row["Total (Att+Def)"],
                                   era_avg_attdef=row["Era average Att+Def"], goods=row["Guild Goods"],
                                   era_avg_goods=row["Era average Guild Goods"]))
+        rank = rank + 1
     return players
-
-#     column_names = ["Score", "Name", "Era", "Attack", "Defense", "Total (Att+Def)", "Era average Att+Def", "Guild Goods", "Era average Guild Goods"]
-#     df_final = df_final.reindex(columns=column_names)
-#     df_final.set_index('Score', inplace=True)
-#     df_final.sort_index(ascending=False,inplace=True)
-#     df_final.reset_index(drop=True, inplace=True)
 #
 #     styled_df = df_final.style.background_gradient(cmap=sns.light_palette("green", as_cmap=True), subset=pd.IndexSlice[df_final['Guild Goods']>=2357, 'Guild Goods']).background_gradient(cmap=sns.light_palette("red", as_cmap=True, reverse=True), subset=pd.IndexSlice[df_final['Guild Goods']<2357, 'Guild Goods']).background_gradient(cmap=sns.light_palette("purple", as_cmap=True), subset=['Total (Att+Def)']).set_precision(0).set_table_styles([{"selector": "", "props": [("border", "1px solid grey")]},{"selector": "tbody td", "props": [("border", "1px solid grey")]},{"selector": "th", "props": [("border", "1px solid grey")]}])
 #     return styled_df.render()
