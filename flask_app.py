@@ -67,7 +67,8 @@ def upload_form():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    data = gen_player_stats_html()
+    return render_template("index.html", data=data)
 
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload_file():
