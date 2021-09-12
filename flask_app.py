@@ -16,7 +16,7 @@ UPLOAD_FOLDER = '/home/odygrd/guildstats/uploads'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-class PlayerInfo
+class PlayerInfo:
   def __init__(self, name, era, attack, defence, attdef, era_avg_attdef, goods, era_avg_goods):
     self.name = name
     self.era = era
