@@ -52,7 +52,7 @@ def gen_player_stats_html():
     # Join into a single df
     df_final = df.join(df_mean)
     df_final.reset_index(drop=False, inplace=True)
-    print(tabulate(df_final, headers='keys', tablefmt='fancy_grid'))
+    
     column_names = ["Score", "Name", "Era", "Attack", "Defense", "Total (Att+Def)", "Era average Att+Def", "Guild Goods", "Era average Guild Goods"]
     df_final = df_final.reindex(columns=column_names)
     df_final.set_index('Score', inplace=True)
