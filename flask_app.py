@@ -66,7 +66,7 @@ def gen_player_stats_html():
     df_final.reset_index(drop=False, inplace=True)
 
     players = []
-    for index, row in df.iterrows():
+    for index, row in df_final.iterrows():
         print("--- ODY index : {} row: {} ---".format(index, row))
 #         players.append(PlayerInfo(name=row["Name"], era=row["Era"],
 #                                   attack=row["Attack"], defence = row["Defense"], attdef= row["Total (Att+Def)"],
