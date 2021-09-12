@@ -21,8 +21,8 @@ def get_latest_player_stats_file():
     dates = []
     for file in os.listdir(app.config['UPLOAD_FOLDER']):
         #     e.g. 2021-09-01.csv
-        filename = filename.strip("'")
-        filename = file.split("_")[-1]
+        filename = file.strip("'")
+        filename = filename.split("_")[-1]
         date = filename.split(".")[0]
         dates.append(date)
 
