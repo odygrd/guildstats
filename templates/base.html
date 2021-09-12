@@ -18,20 +18,20 @@
       }
   </style>
 
-  <script type="text/javascript">
-    $(document).ready( function () {
-      var table = $('#example').DataTable({
-        "createdRow": function( row, data, dataIndex ) {
-          if ( data[7] <2357 ) {
-            $(row).find('td:eq(7)').addClass('red');
-          }
-        }
-      });
-    } );
-  </script>
-
 </head>
-<body>
+<body onload="ColourGrid()">
+<script type="text/javascript">
+  function ColourGrid() {
+    var table = $('#data').DataTable({
+      "createdRow": function( row, data, dataIndex ) {
+        if ( data[7] < 2357 ) {
+          $(row).find('td:eq(7)').addClass('red');
+        }
+      }
+    });
+  }
+</script>
+
 <div class="container">
   <h1>{{ title }}</h1>
   <hr>
