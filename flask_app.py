@@ -61,19 +61,14 @@ def gen_player_stats_html():
     styled_df = df_final.style.background_gradient(cmap=sns.light_palette("green", as_cmap=True), subset=pd.IndexSlice[df_final['Guild Goods']>=2357, 'Guild Goods']).background_gradient(cmap=sns.light_palette("red", as_cmap=True, reverse=True), subset=pd.IndexSlice[df_final['Guild Goods']<2357, 'Guild Goods']).background_gradient(cmap=sns.light_palette("purple", as_cmap=True), subset=['Total (Att+Def)']).set_precision(0).set_table_styles([{"selector": "", "props": [("border", "1px solid grey")]},{"selector": "tbody td", "props": [("border", "1px solid grey")]},{"selector": "th", "props": [("border", "1px solid grey")]}])
     return styled_df.render()
 
-@app.route('/upload')
-def upload_form():
-   return render_template('upload.html')
-
 @app.route("/")
 def index():
     data = gen_player_stats_html()
     return render_template("index.html", data=data)
 
-@app.route('/upload', methods = ['GET', 'POST'])
+@app.route('/', methods=['POST'])
 def upload_file():
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
         uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename))
-        data = gen_player_stats_html()
-    return render_template("index.html", data=data)
+    return redirect(url_for('index'))
