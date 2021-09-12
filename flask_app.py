@@ -67,11 +67,11 @@ def gen_player_stats_html():
 
     players = []
     for index, row in df.iterrows():
-        print("ODY index : {} row: {}".format(index, row))
-        players.append(PlayerInfo(name=row["Name"], era=row["Era"],
-                                  attack=row["Attack"], defence = row["Defense"], attdef= row["Total (Att+Def)"],
-                                  era_avg_attdef=row["Era average Att+Def"], goods=row["Guild Goods"],
-                                  era_avg_goods=row["Era average Guild Goods"]))
+        print("--- ODY index : {} row: {} ---".format(index, row))
+#         players.append(PlayerInfo(name=row["Name"], era=row["Era"],
+#                                   attack=row["Attack"], defence = row["Defense"], attdef= row["Total (Att+Def)"],
+#                                   era_avg_attdef=row["Era average Att+Def"], goods=row["Guild Goods"],
+#                                   era_avg_goods=row["Era average Guild Goods"]))
     return players
 
 #     column_names = ["Score", "Name", "Era", "Attack", "Defense", "Total (Att+Def)", "Era average Att+Def", "Guild Goods", "Era average Guild Goods"]
