@@ -75,9 +75,9 @@ def gen_player_stats_html():
     rank = 1
     for index, row in df_final.iterrows():
         players.append(PlayerInfo(rank=rank, name=row["Name"], era=row["Era"],
-                                  attack=row["Attack"], defence = row["Defense"], attdef= row["Total (Att+Def)"],
-                                  era_avg_attdef=row["Era average Att+Def"], goods=row["Guild Goods"],
-                                  era_avg_goods=row["Era average Guild Goods"]))
+                                  attack=row["Attack"], defence=row["Defense"], attdef=row["Total (Att+Def)"],
+                                  era_avg_attdef=int(row["Era average Att+Def"]), goods=row["Guild Goods"],
+                                  era_avg_goods=int(row["Era average Guild Goods"])))
         rank = rank + 1
     return players
 #
