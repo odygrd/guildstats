@@ -9,11 +9,15 @@ UPLOAD_FOLDER = '/home/odygrd/guildstats/uploads'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+@app.route('/upload')
+def upload_file():
+   return render_template('upload.html')
+
 @app.route("/")
 def index():
-    return render_template("main_page.html")
+    return render_template("index.html")
 
-@app.route('/', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload_file():
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
