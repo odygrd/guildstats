@@ -67,6 +67,7 @@ def gen_player_stats_html():
 
     players = []
     for index, row in df.iterrows():
+        print("ODY index : {} row: {}".format(index, row))
         players.append(PlayerInfo(name=row["Name"], era=row["Era"],
                                   attack=row["Attack"], defence = row["Defense"], attdef= row["Total (Att+Def)"],
                                   era_avg_attdef=row["Era average Att+Def"], goods=row["Guild Goods"],
