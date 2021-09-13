@@ -44,10 +44,10 @@ def get_latest_player_stats_file():
     # Sort the list in ascending order of dates
     dates.sort(key = lambda date: datetime.strptime(date, '%Y-%m-%d'))
 
-    return "{}/player_stats_{}.csv".format(app.config['UPLOAD_FOLDER'], dates[-1])
+    return "{}/player_stats_{}.csv".format(app.config['UPLOAD_FOLDER'], dates[-1]), dates[-1]
 
-def gen_player_stats_html():
-    df = pd.read_csv(get_latest_player_stats_file())
+def gen_player_stats_grid():
+    df, update_date = pd.read_csv(get_latest_player_stats_file())
 
     sum_column = df["Attack"] + df["Defense"]
     df["Total (Att+Def)"] = sum_column
@@ -79,16 +79,13 @@ def gen_player_stats_html():
                                   era_avg_attdef=int(row["Era average Att+Def"]), goods=row["Guild Goods"],
                                   era_avg_goods=int(row["Era average Guild Goods"])))
         rank = rank + 1
-    return players
-#
-#     styled_df = df_final.style.background_gradient(cmap=sns.light_palette("green", as_cmap=True), subset=pd.IndexSlice[df_final['Guild Goods']>=2357, 'Guild Goods']).background_gradient(cmap=sns.light_palette("red", as_cmap=True, reverse=True), subset=pd.IndexSlice[df_final['Guild Goods']<2357, 'Guild Goods']).background_gradient(cmap=sns.light_palette("purple", as_cmap=True), subset=['Total (Att+Def)']).set_precision(0).set_table_styles([{"selector": "", "props": [("border", "1px solid grey")]},{"selector": "tbody td", "props": [("border", "1px solid grey")]},{"selector": "th", "props": [("border", "1px solid grey")]}])
-#     return styled_df.render()
+    return players, update_date
 
 @app.route("/")
 def index():
-    players = gen_player_stats_html()
+    players, update_date = gen_player_stats_grid()
     return render_template('basic_table.html', title='Guild Stats',
-                           players=players)
+                           players=players, update_date=)
 
 @app.route('/', methods=['POST'])
 def upload_file():

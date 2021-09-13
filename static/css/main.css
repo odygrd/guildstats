@@ -1,0 +1,16 @@
+body {
+    font: 90%/1.45em "Helvetica Neue", HelveticaNeue, Verdana, Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #fff;
+}
+.red {
+    background-color: red !important;
+}
+
+p.updatedate {
+    text-align: left;
+    font-size: 14px;
+    background-color: lightblue;
+}
