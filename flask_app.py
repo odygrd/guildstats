@@ -85,7 +85,7 @@ def gen_player_stats_grid():
 def index():
     players, update_date = gen_player_stats_grid()
     return render_template('basic_table.html', title='Guild Stats',
-                           players=players, update_date=)
+                           players=players, update_date=update_date)
 
 @app.route('/', methods=['POST'])
 def upload_file():
