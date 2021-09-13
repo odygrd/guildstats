@@ -47,7 +47,8 @@ def get_latest_player_stats_file():
     return "{}/player_stats_{}.csv".format(app.config['UPLOAD_FOLDER'], dates[-1]), dates[-1]
 
 def gen_player_stats_grid():
-    df, update_date = pd.read_csv(get_latest_player_stats_file())
+    csv_file, update_date = get_latest_player_stats_file()
+    df = pd.read_csv(csv_file)
 
     sum_column = df["Attack"] + df["Defense"]
     df["Total (Att+Def)"] = sum_column
