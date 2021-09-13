@@ -54,7 +54,10 @@
         if ( data[7] <2357 ) {
           $(row).find('td:eq(7)').addClass('red');
         }
-      }
+      },
+      "columnDefs": [
+        {"className": "dt-center", "targets": "_all"}
+      ]
     });
   });
 </script>
