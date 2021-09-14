@@ -81,18 +81,19 @@ def gen_player_stats_grid():
     for index, row in df_final.iterrows():
         players.append(PlayerInfo(rank=rank, name=row["Name"], era=row["Era"],
                                   attack=row["Attack"], defence=row["Defense"], attdef=row["Total (Att+Def)"],
-                                  era_avg_attdef=int(row["Era average Att+Def"]), goods=row["Guild Goods"],
-                                  era_avg_goods=int(row["Era average Guild Goods"]),
+                                  era_avg_attdef=round(row["Era average Att+Def"]), goods=row["Guild Goods"],
+                                  era_avg_goods=round(row["Era average Guild Goods"]),
                                   players_count_era=df_eras_summary.loc[row["Era"]]))
         rank = rank + 1
 
-    return players, update_date
+    guild_average_guild_goods = round(df_final["Guild Goods"].mean())
+    return players, update_date, guild_average_guild_goods
 
 @app.route("/")
 def index():
-    players, update_date = gen_player_stats_grid()
+    players, update_date, guild_average_guild_goods = gen_player_stats_grid()
     return render_template('basic_table.html', title='Guild Stats',
-                           players=players, update_date=update_date)
+                           players=players, update_date=update_date, guild_average_guild_goods=guild_average_guild_goods)
 
 @app.route('/', methods=['POST'])
 def upload_file():

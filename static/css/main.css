@@ -9,6 +9,11 @@ body {
     background-color: red !important;
 }
 
+p.otherstats {
+    text-align: left;
+    font-size: 18px;
+}
+
 p.updatedate {
     text-align: left;
     font-size: 14px;
