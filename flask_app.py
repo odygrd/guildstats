@@ -80,7 +80,7 @@ def gen_player_stats_grid():
     for index, row in df_final.iterrows():
         players.append(PlayerInfo(rank=rank, name=row["Name"], era=row["Era"],
                                   attack=row["Attack"], defence=row["Defense"], attdef=row["Total (Att+Def)"],
-                                  era_avg_attdef=int(row["Era average Att+Def"]), goods=row["Guild Goods"]),
+                                  era_avg_attdef=int(row["Era average Att+Def"]), goods=row["Guild Goods"],
                                   era_avg_goods=int(row["Era average Guild Goods"]),
                                   players_count_era=df_eras_summary.loc[row["Era"]]))
         rank = rank + 1
