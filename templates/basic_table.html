@@ -41,7 +41,7 @@
 
 {% block scripts %}
 <script>
-  $.fn.dataTable.ext.type.order['player-era-pre'] = function ( d ) {
+  $.fn.dataTable.ext.type.order['playerera-pre'] = function ( d ) {
     switch ( d ) {
       case 'StoneAge':    return 1;
       case 'BronzeAge': return 2;
@@ -90,7 +90,7 @@
       "columnDefs": [
         {"className": "dt-center", "targets": "_all"},
         // Era column is 2
-        {"type": "player-era", "targets": 2}
+        {"type": "playerera", "targets": 2}
       ]
     });
   });
