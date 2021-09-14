@@ -89,8 +89,8 @@ def gen_player_stats_grid():
     # Also get player count per era
     eras = []
     df_eras = df_final.groupby(['Era']).count()["Name"]
-    for index, row in df_eras.iterrows():
-        eras.append(EraInfo(rank=rank, era=row["Era"], player_count=row["Name"]))
+    for index, value in df_eras.items()
+        eras.append(EraInfo(era=index, player_count=value))
 
     return players, eras, update_date
 
