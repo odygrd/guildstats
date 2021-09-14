@@ -32,6 +32,23 @@
   </tbody>
 </table>
 
+<table id="era_count_table" class="table table-striped">
+  <thead>
+  <tr>
+    <th>Era</th>
+    <th>Players</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for era in eras %}
+  <tr>
+    <td>{{ era.era_name }}</td>
+    <td>{{ era.player_count }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
 <p class="updatedate">Updated: {{ update_date }}</p>
 {% endblock %}
 
@@ -55,6 +72,16 @@
           $(row).find('td:eq(7)').addClass('red');
         }
       },
+      "columnDefs": [
+        {"className": "dt-center", "targets": "_all"}
+      ]
+    });
+
+    $('#era_count_table').DataTable({
+      "iDisplayLength": 100,
+      columns: [
+        {orderable: true, searchable: false},
+        {orderable: true, searchable: false}],
       "columnDefs": [
         {"className": "dt-center", "targets": "_all"}
       ]

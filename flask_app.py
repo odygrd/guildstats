@@ -16,6 +16,11 @@ UPLOAD_FOLDER = '/home/odygrd/guildstats/uploads'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+class EraInfo:
+  def __init__(self, era, player_count):
+    self.era_name = era
+    self.player_count = player_count
+
 class PlayerInfo:
   def __init__(self, rank, name, era, attack, defence, attdef, era_avg_attdef, goods, era_avg_goods):
     self.rank = rank
@@ -80,13 +85,20 @@ def gen_player_stats_grid():
                                   era_avg_attdef=int(row["Era average Att+Def"]), goods=row["Guild Goods"],
                                   era_avg_goods=int(row["Era average Guild Goods"])))
         rank = rank + 1
-    return players, update_date
+
+    # Also get player count per era
+    eras = []
+    df_eras = df_final.groupby(['Era']).count()["Name"]
+    for index, row in df_eras.iterrows():
+        eras.append(EraInfo(rank=rank, era=row["Era"], player_count=row["Name"]))
+
+    return players, eras, update_date
 
 @app.route("/")
 def index():
-    players, update_date = gen_player_stats_grid()
+    players, eras, update_date = gen_player_stats_grid()
     return render_template('basic_table.html', title='Guild Stats',
-                           players=players, update_date=update_date)
+                           players=players, eras=eras, update_date=update_date)
 
 @app.route('/', methods=['POST'])
 def upload_file():
