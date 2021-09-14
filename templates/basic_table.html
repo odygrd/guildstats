@@ -13,7 +13,8 @@
     <th>Attack+Defence</th>
     <th>Era Avg Att/Def</th>
     <th>Goods</th>
-    <th>Era Avg Goods</th>
+    <th>Total Guild Goods</th>
+    <th>Average Goods/Era</th>
   </tr>
   </thead>
   <tbody>
@@ -28,6 +29,7 @@
     <td>{{ player.attdef }}</td>
     <td>{{ player.era_avg_attdef }}</td>
     <td>{{ player.goods }}</td>
+    <td>{{ player.total_guild_goods }}</td>
     <td>{{ player.era_avg_goods }}</td>
   </tr>
   {% endfor %}
@@ -52,6 +54,7 @@
         {orderable: true, searchable: false},
         {orderable: true, searchable: false},
         {orderable: true, searchable: false},
+        {orderable: true, searchable: false},
         {orderable: true, searchable: false}],
       "createdRow": function( row, data, dataIndex ) {
         if ( data[8] <2357 ) {
@@ -62,14 +65,6 @@
         {"className": "dt-center", "targets": "_all"}
       ]
     });
-
-    $('#era_count_table').DataTable(
-      {
-        searching: false, paging: false, info: false,
-        "columnDefs": [
-          {"className": "dt-center", "targets": "_all"}
-        ]
-      });
   });
 </script>
 {% endblock %}

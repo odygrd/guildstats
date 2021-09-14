@@ -17,7 +17,8 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 class PlayerInfo:
-  def __init__(self, rank, name, era, attack, defence, attdef, era_avg_attdef, goods, era_avg_goods, players_count_era):
+  def __init__(self, rank, name, era, attack, defence, attdef, era_avg_attdef, goods, era_avg_goods, players_count_era,
+                total_guild_goods):
     self.rank = rank
     self.name = name
     self.era = era
@@ -28,6 +29,7 @@ class PlayerInfo:
     self.goods = goods
     self.era_avg_goods = era_avg_goods
     self.players_count_era = players_count_era
+    self.total_guild_goods = total_guild_goods
 
 
 # Returns the file with the latest date
@@ -73,7 +75,9 @@ def gen_player_stats_grid():
     df_final.sort_index(ascending=False,inplace=True)
     df_final.reset_index(drop=True, inplace=True)
 
+    # Count per era
     df_eras_summary = df_final.groupby(['Era']).count()["Name"]
+    df_eras_guild_goods = df_final.groupby(['Era']).sum()["Guild Goods"]
 
     players = []
     rank = 1
@@ -82,7 +86,8 @@ def gen_player_stats_grid():
                                   attack=row["Attack"], defence=row["Defense"], attdef=row["Total (Att+Def)"],
                                   era_avg_attdef=int(row["Era average Att+Def"]), goods=row["Guild Goods"],
                                   era_avg_goods=int(row["Era average Guild Goods"]),
-                                  players_count_era=df_eras_summary.loc[row["Era"]]))
+                                  players_count_era=df_eras_summary.loc[row["Era"]],
+                                  total_guild_goods=df_eras_guild_goods.loc[row["Era"]]))
         rank = rank + 1
 
     return players, update_date
