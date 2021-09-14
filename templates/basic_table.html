@@ -7,11 +7,13 @@
     <th>Rank</th>
     <th>Name</th>
     <th>Era</th>
+    <th>Members Count</th>
     <th>Attack</th>
     <th>Defense</th>
     <th>Attack+Defence</th>
     <th>Era Avg Att/Def</th>
     <th>Goods</th>
+    <th>Era Avg Goods</th>
     <th>Era Avg Goods</th>
   </tr>
   </thead>
@@ -21,30 +23,13 @@
     <td>{{ player.rank }}</td>
     <td>{{ player.name }}</td>
     <td>{{ player.era }}</td>
+    <td>{{ player.players_count_era }}</td>
     <td>{{ player.attack }}</td>
     <td>{{ player.defence }}</td>
     <td>{{ player.attdef }}</td>
     <td>{{ player.era_avg_attdef }}</td>
     <td>{{ player.goods }}</td>
     <td>{{ player.era_avg_goods }}</td>
-  </tr>
-  {% endfor %}
-  </tbody>
-</table>
-
-<br>
-<table id="era_count_table" class="table table-striped">
-  <thead>
-  <tr>
-    <th>Era</th>
-    <th>Players</th>
-  </tr>
-  </thead>
-  <tbody>
-  {% for era in eras %}
-  <tr>
-    <td>{{ era.era_name }}</td>
-    <td>{{ era.player_count }}</td>
   </tr>
   {% endfor %}
   </tbody>
@@ -67,10 +52,11 @@
         {orderable: true, searchable: false},
         {orderable: true, searchable: false},
         {orderable: true, searchable: false},
+        {orderable: true, searchable: false},
         {orderable: true, searchable: false}],
       "createdRow": function( row, data, dataIndex ) {
-        if ( data[7] <2357 ) {
-          $(row).find('td:eq(7)').addClass('red');
+        if ( data[8] <2357 ) {
+          $(row).find('td:eq(8)').addClass('red');
         }
       },
       "columnDefs": [

@@ -16,13 +16,8 @@ UPLOAD_FOLDER = '/home/odygrd/guildstats/uploads'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-class EraInfo:
-  def __init__(self, era, player_count):
-    self.era_name = era
-    self.player_count = player_count
-
 class PlayerInfo:
-  def __init__(self, rank, name, era, attack, defence, attdef, era_avg_attdef, goods, era_avg_goods):
+  def __init__(self, rank, name, era, attack, defence, attdef, era_avg_attdef, goods, era_avg_goods, players_count_era):
     self.rank = rank
     self.name = name
     self.era = era
@@ -32,6 +27,7 @@ class PlayerInfo:
     self.era_avg_attdef = era_avg_attdef
     self.goods = goods
     self.era_avg_goods = era_avg_goods
+    self.players_count_era = players_count_era
 
 
 # Returns the file with the latest date
@@ -77,28 +73,24 @@ def gen_player_stats_grid():
     df_final.sort_index(ascending=False,inplace=True)
     df_final.reset_index(drop=True, inplace=True)
 
+    df_eras_summary = df_final.groupby(['Era']).count()["Name"]
+
     players = []
     rank = 1
     for index, row in df_final.iterrows():
         players.append(PlayerInfo(rank=rank, name=row["Name"], era=row["Era"],
                                   attack=row["Attack"], defence=row["Defense"], attdef=row["Total (Att+Def)"],
                                   era_avg_attdef=int(row["Era average Att+Def"]), goods=row["Guild Goods"],
-                                  era_avg_goods=int(row["Era average Guild Goods"])))
+                                  era_avg_goods=int(row["Era average Guild Goods"], players_count_era=df_eras_summary.loc[row["Era"]])))
         rank = rank + 1
 
-    # Also get player count per era
-    eras = []
-    df_eras = df_final.groupby(['Era']).count()["Name"]
-    for index, value in df_eras.items():
-        eras.append(EraInfo(era=index, player_count=value))
-
-    return players, eras, update_date
+    return players, update_date
 
 @app.route("/")
 def index():
-    players, eras, update_date = gen_player_stats_grid()
+    players, update_date = gen_player_stats_grid()
     return render_template('basic_table.html', title='Guild Stats',
-                           players=players, eras=eras, update_date=update_date)
+                           players=players, update_date=update_date)
 
 @app.route('/', methods=['POST'])
 def upload_file():
