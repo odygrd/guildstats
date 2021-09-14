@@ -87,13 +87,16 @@ def gen_player_stats_grid():
         rank = rank + 1
 
     guild_average_guild_goods = round(df_final["Guild Goods"].mean())
-    return players, update_date, guild_average_guild_goods
+    total_guild_goods = df_final["Guild Goods"].sum()
+    return players, update_date, guild_average_guild_goods, total_guild_goods
 
 @app.route("/")
 def index():
-    players, update_date, guild_average_guild_goods = gen_player_stats_grid()
+    players, update_date, guild_average_guild_goods, total_guild_goods = gen_player_stats_grid()
     return render_template('basic_table.html', title='Guild Stats',
-                           players=players, update_date=update_date, guild_average_guild_goods=guild_average_guild_goods)
+                           players=players, update_date=update_date,
+                           guild_average_guild_goods=guild_average_guild_goods,
+                           total_guild_goods=total_guild_goods)
 
 @app.route("/upload")
 def upload():
