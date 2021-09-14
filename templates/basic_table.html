@@ -78,15 +78,7 @@
       ]
     });
 
-    $('#era_count_table').DataTable({
-      "iDisplayLength": 100,
-      columns: [
-        {orderable: true, searchable: false},
-        {orderable: true, searchable: false}],
-      "columnDefs": [
-        {"className": "dt-center", "targets": "_all"}
-      ]
-    });
+    $('#era_count_table').DataTable({searching: false, paging: false, info: false});
   });
 </script>
 {% endblock %}
