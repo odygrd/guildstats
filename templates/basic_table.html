@@ -71,6 +71,10 @@
     return 0;
   };
 
+  function between(x, max, min) {
+    return x >= min && x <= max;
+  }
+
   $(document).ready(function () {
     $('#data').DataTable({
      "iDisplayLength": 100,
@@ -87,8 +91,33 @@
         {orderable: true, searchable: false}],
       "createdRow": function( row, data, dataIndex ) {
        // Guild good column is 8
-        if ( data[8] <2357 ) {
-          $(row).find('td:eq(8)').addClass('red');
+        if (between(data[8], 2360, 2260)) {
+          $(row).find('td:eq(8)').addClass('guildgoodswarning9');
+        }
+        else if (between(data[8], 2259, 2159)) {
+          $(row).find('td:eq(8)').addClass('guildgoodswarning8');
+        }
+        else if (between(data[8], 2158, 2058)) {
+          $(row).find('td:eq(8)').addClass('guildgoodswarning7');
+        }
+        else if (between(data[8], 2057, 1957)) {
+          $(row).find('td:eq(8)').addClass('guildgoodswarning6');
+        }
+        else if (between(data[8], 1956, 1856)) {
+          $(row).find('td:eq(8)').addClass('guildgoodswarning5');
+        }
+        else if (between(data[8], 1855, 1755)) {
+          $(row).find('td:eq(8)').addClass('guildgoodswarning4');
+        }
+        else if (between(data[8], 1754, 1654)) {
+          $(row).find('td:eq(8)').addClass('guildgoodswarning3');
+        }
+        else if (between(data[8], 1653, 1453)) {
+          $(row).find('td:eq(8)').addClass('guildgoodswarning2');
+        }
+        else if (data[8] < 1453)
+        {
+          $(row).find('td:eq(8)').addClass('guildgoodswarning1');
         }
       },
       "columnDefs": [

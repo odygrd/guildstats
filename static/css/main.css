@@ -5,8 +5,33 @@ body {
     color: #333;
     background-color: #fff;
 }
-.red {
-    background-color: red !important;
+
+.guildgoodswarning1 {
+    background-color: #78281F !important;
+}
+.guildgoodswarning2 {
+    background-color: #943126 !important;
+}
+.guildgoodswarning3 {
+    background-color: #B03A2E !important;
+}
+.guildgoodswarning4 {
+    background-color: #CB4335 !important;
+}
+.guildgoodswarning5 {
+    background-color: #E74C3C !important;
+}
+.guildgoodswarning6 {
+    background-color: #EC7063 !important;
+}
+.guildgoodswarning7 {
+    background-color: #F1948A !important;
+}
+.guildgoodswarning8 {
+    background-color: #F5B7B1 !important;
+}
+.guildgoodswarning9 {
+    background-color: #FADBD8 !important;
 }
 
 p.otherstats {
