@@ -10,11 +10,19 @@ import os
 import seaborn as sns
 from flask import Flask, Response, render_template, request, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+import secrets
 
 APP_FOLDER = '/home/odygrd/guildstats'
 UPLOAD_FOLDER = '/home/odygrd/guildstats/uploads'
 
 app = Flask(__name__)
+
+# config
+app.config.update(
+    DEBUG = True,
+    SECRET_KEY = secrets.token_urlsafe(16)
+)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
