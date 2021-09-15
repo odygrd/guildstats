@@ -133,16 +133,17 @@ def detail():
                            guild_average_guild_goods=f'{guild_average_guild_goods:,}',
                            total_guild_goods=f'{total_guild_goods:,}')
 
-@app.route("/admin")
+@app.route("/adminpage")
 @login_required
-def admin():
+def adminpage():
     players, update_date, guild_average_guild_goods, total_guild_goods = gen_player_stats_grid()
     return render_template('admin.html',
                            players=players, update_date=update_date,
                            guild_average_guild_goods=f'{guild_average_guild_goods:,}',
                            total_guild_goods=f'{total_guild_goods:,}')
 
-@app.route('/admin', methods=['POST'])
+@app.route('/adminpage', methods=['POST'])
+@login_required
 def upload_file():
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
@@ -150,7 +151,7 @@ def upload_file():
     return redirect(url_for('admin'))
 
 # somewhere to login
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/admin", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
         username = request.form['username']
@@ -159,7 +160,7 @@ def login():
             id = username.split('user')[1]
             user = User(id)
             login_user(user)
-            return redirect(url_for('admin'))
+            return redirect(url_for('adminpage'))
         else:
             return abort(401)
     else:
