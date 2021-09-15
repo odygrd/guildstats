@@ -8,37 +8,8 @@ import pandas as pd
 from datetime import datetime
 import os
 import seaborn as sns
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, Response, render_template, request, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_required
-
-class User(UserMixin):
-    # proxy for a database of users
-    user_database = {"GT": ("GT", "GTNFA123"),
-               "ODY": ("ODY", "ODYNFA123")}
-
-    def __init__(self, username, password):
-        self.id = username
-        self.password = password
-
-    @classmethod
-    def get(cls,id):
-        return cls.user_database.get(id)
-
-
-@login_manager.request_loader
-def load_user(request):
-    token = request.headers.get('Authorization')
-    if token is None:
-        token = request.args.get('token')
-
-    if token is not None:
-        username,password = token.split(":") # naive token
-        user_entry = User.get(username)
-        if (user_entry is not None):
-            user = User(user_entry[0],user_entry[1])
-            if (user.password == password):
-                return user
-    return None
 
 APP_FOLDER = '/home/odygrd/guildstats'
 UPLOAD_FOLDER = '/home/odygrd/guildstats/uploads'
@@ -48,6 +19,20 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# silly user model
+class User(UserMixin):
+    def __init__(self, id):
+        self.id = id
+        self.name = "user" + str(id)
+        self.password = self.name + "_secret"
+
+    def __repr__(self):
+        return "%d/%s/%s" % (self.id, self.name, self.password)
+
+
+# create some users with ids 1 to 20
+users = [User(5)]
 
 class PlayerInfo:
   def __init__(self, rank, name, era, attack, defence, attdef, era_avg_attdef, goods, era_avg_goods, players_count_era):
@@ -151,3 +136,36 @@ def upload_file():
     if uploaded_file.filename != '':
         uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename))
     return redirect(url_for('detail'))
+
+# somewhere to login
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if password == username + "_secret":
+            id = username.split('user')[1]
+            user = User(id)
+            login_user(user)
+            return redirect(request.args.get("next"))
+        else:
+            return abort(401)
+    else:
+        return Response('''
+        <form action="" method="post">
+            <p><input type=text name=username>
+            <p><input type=password name=password>
+            <p><input type=submit value=Login>
+        </form>
+        ''')
+        
+# handle login failed
+@app.errorhandler(401)
+def page_not_found(e):
+    return Response('<p>Login failed</p>')
+
+
+# callback to reload the user object
+@login_manager.user_loader
+def load_user(userid):
+    return User(userid)
