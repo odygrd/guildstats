@@ -9,7 +9,7 @@ from datetime import datetime
 import os
 import seaborn as sns
 from flask import Flask, render_template, request, redirect, url_for
-from flask.ext.login import LoginManager, UserMixin, login_required
+from flask_module import LoginManager, UserMixin, login_required
 
 class User(UserMixin):
     # proxy for a database of users
