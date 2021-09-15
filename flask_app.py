@@ -99,7 +99,7 @@ def index():
                            total_guild_goods=f'{total_guild_goods:,}')
 
 @app.route("/detail")
-def index():
+def detail():
     players, update_date, guild_average_guild_goods, total_guild_goods = gen_player_stats_grid()
     return render_template('detail.html',
                            players=players, update_date=update_date,
