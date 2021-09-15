@@ -9,7 +9,7 @@ from datetime import datetime
 import os
 import seaborn as sns
 from flask import Flask, Response, render_template, request, redirect, url_for
-from flask_login import LoginManager, UserMixin, login_required
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 
 APP_FOLDER = '/home/odygrd/guildstats'
 UPLOAD_FOLDER = '/home/odygrd/guildstats/uploads'
@@ -158,7 +158,7 @@ def login():
             <p><input type=submit value=Login>
         </form>
         ''')
-        
+
 # handle login failed
 @app.errorhandler(401)
 def page_not_found(e):
