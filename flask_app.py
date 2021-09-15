@@ -93,14 +93,14 @@ def gen_player_stats_grid():
 @app.route("/")
 def index():
     players, update_date, guild_average_guild_goods, total_guild_goods = gen_player_stats_grid()
-    return render_template('basic_table.html', title='Guild Stats',
+    return render_template('basic_table.html',
                            players=players, update_date=update_date,
                            guild_average_guild_goods=f'{guild_average_guild_goods:,}',
                            total_guild_goods=f'{total_guild_goods:,}')
 
 @app.route("/upload")
 def upload():
-    return render_template('upload.html', title='Update Guild Stats')
+    return render_template('upload.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
