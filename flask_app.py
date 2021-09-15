@@ -133,17 +133,17 @@ def detail():
                            guild_average_guild_goods=f'{guild_average_guild_goods:,}',
                            total_guild_goods=f'{total_guild_goods:,}')
 
-@app.route("/upload")
+@app.route("/admin")
 @login_required
-def upload():
-    return render_template('upload.html')
+def admin():
+    return render_template('admin.html')
 
-@app.route('/upload', methods=['POST'])
+@app.route('/admin', methods=['POST'])
 def upload_file():
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
         uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename))
-    return redirect(url_for('detail'))
+    return redirect(url_for('admin'))
 
 # somewhere to login
 @app.route("/login", methods=["GET", "POST"])
@@ -155,7 +155,7 @@ def login():
             id = username.split('user')[1]
             user = User(id)
             login_user(user)
-            return redirect(url_for('upload'))
+            return redirect(url_for('admin'))
         else:
             return abort(401)
     else:
