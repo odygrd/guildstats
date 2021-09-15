@@ -136,7 +136,11 @@ def detail():
 @app.route("/admin")
 @login_required
 def admin():
-    return render_template('admin.html')
+    players, update_date, guild_average_guild_goods, total_guild_goods = gen_player_stats_grid()
+    return render_template('admin.html',
+                           players=players, update_date=update_date,
+                           guild_average_guild_goods=f'{guild_average_guild_goods:,}',
+                           total_guild_goods=f'{total_guild_goods:,}')
 
 @app.route('/admin', methods=['POST'])
 def upload_file():
