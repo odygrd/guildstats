@@ -9,11 +9,44 @@ from datetime import datetime
 import os
 import seaborn as sns
 from flask import Flask, render_template, request, redirect, url_for
+from flask.ext.login import LoginManager, UserMixin, login_required
+
+class User(UserMixin):
+    # proxy for a database of users
+    user_database = {"GT": ("GT", "GTNFA123"),
+               "ODY": ("ODY", "ODYNFA123")}
+
+    def __init__(self, username, password):
+        self.id = username
+        self.password = password
+
+    @classmethod
+    def get(cls,id):
+        return cls.user_database.get(id)
+
+
+@login_manager.request_loader
+def load_user(request):
+    token = request.headers.get('Authorization')
+    if token is None:
+        token = request.args.get('token')
+
+    if token is not None:
+        username,password = token.split(":") # naive token
+        user_entry = User.get(username)
+        if (user_entry is not None):
+            user = User(user_entry[0],user_entry[1])
+            if (user.password == password):
+                return user
+    return None
 
 APP_FOLDER = '/home/odygrd/guildstats'
 UPLOAD_FOLDER = '/home/odygrd/guildstats/uploads'
 
 app = Flask(__name__)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 class PlayerInfo:
@@ -99,6 +132,7 @@ def index():
                            total_guild_goods=f'{total_guild_goods:,}')
 
 @app.route("/detail")
+@login_required
 def detail():
     players, update_date, guild_average_guild_goods, total_guild_goods = gen_player_stats_grid()
     return render_template('detail.html',
@@ -107,6 +141,7 @@ def detail():
                            total_guild_goods=f'{total_guild_goods:,}')
 
 @app.route("/upload")
+@login_required
 def upload():
     return render_template('upload.html')
 
@@ -115,4 +150,4 @@ def upload_file():
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
         uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename))
-    return redirect(url_for('index'))
+    return redirect(url_for('detail'))
