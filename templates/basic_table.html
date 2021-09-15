@@ -8,7 +8,6 @@
     <th>Name</th>
     <th>Era</th>
     <th>Members Count</th>
-    <th>Era Avg Att/Def</th>
     <th>Goods</th>
     <th>Average Goods/Era</th>
   </tr>
@@ -20,7 +19,6 @@
     <td>{{ player.name }}</td>
     <td>{{ player.era }}</td>
     <td>{{ player.players_count_era }}</td>
-    <td>{{ player.era_avg_attdef }}</td>
     <td>{{ player.goods }}</td>
     <td>{{ player.era_avg_goods }}</td>
   </tr>
@@ -76,7 +74,6 @@
         {orderable: true, searchable: false},
         {orderable: true, searchable: true},
         {orderable: true, searchable: true},
-        {orderable: true, searchable: false},
         {orderable: true, searchable: false},
         {orderable: true, searchable: false},
         {orderable: true, searchable: false}],
