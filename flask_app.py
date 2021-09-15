@@ -155,7 +155,7 @@ def login():
             id = username.split('user')[1]
             user = User(id)
             login_user(user)
-            return redirect(request.args.get("next"))
+            return redirect(url_for('upload'))
         else:
             return abort(401)
     else:
